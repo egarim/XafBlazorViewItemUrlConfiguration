@@ -1,50 +1,112 @@
 # XAF Blazor ViewItem URL Configuration
 
-**Working example of XAF ViewItems accessible via URL - copied from production XafGitHubCopilot**
+✅ **WORKING CODE** - Builds successfully on .NET 9
 
-This repository demonstrates how to make XAF Blazor ViewItems accessible through:
-1. Traditional XAF navigation (standard)
-2. Direct URL parameters (for deep linking, QR codes, bookmarks)
-3. Programmatic access (for mobile apps, external systems)
+This is a **production-ready copy** of XafGitHubCopilot with renamed namespaces, demonstrating how XAF ViewItems work in Blazor.
 
-## ✅ This is WORKING Code
+## ✅ Build Status
 
-This project is a **direct copy** of the working XafGitHubCopilot implementation with renamed namespaces.
-
-**Status:** ✅ Builds successfully  
+**Status:** Builds successfully  
 **Framework:** .NET 9.0  
-**XAF Version:** Latest DevExpress packages  
+**Tested on:** Linux + .NET 9.0 SDK
 
-## 🎯 What This Demonstrates
+```bash
+dotnet build XafBlazorViewItemUrlConfiguration.slnx
+# Build succeeded. 0 Error(s)
+```
+
+## 🎯 What This Shows
+
+This is the **working base code** from XafGitHubCopilot. It demonstrates:
+
+1. ✅ **Reusable Blazor Component** (`CopilotChat.razor`)
+2. ✅ **XAF ViewItem Wrapper** (`CopilotChatViewItemBlazor.cs`)
+3. ✅ **GitHub Copilot SDK Integration** (services layer)
+4. ✅ **Complete XAF Application** (business objects, controllers, security)
+
+## 📁 What's Included
+
+- `XafBlazorViewItemUrlConfiguration.Module/` - Shared module (business objects, services)
+- `XafBlazorViewItemUrlConfiguration.Blazor.Server/` - Blazor Server UI
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- **.NET 9.0 SDK**
+- **DevExpress Universal License** (v25.2+)
+- License activated on your machine
+
+### Build
+
+```bash
+git clone https://github.com/egarim/XafBlazorViewItemUrlConfiguration.git
+cd XafBlazorViewItemUrlConfiguration
+dotnet build XafBlazorViewItemUrlConfiguration.slnx
+```
+
+### Run
+
+```bash
+cd XafBlazorViewItemUrlConfiguration/XafBlazorViewItemUrlConfiguration.Blazor.Server
+dotnet run
+```
+
+Browse: `https://localhost:5001`  
+Login: `Admin` / _(empty password)_
+
+## 🔧 Key Files to Study
 
 ### The ViewItem Pattern
 
-**CopilotChatViewItemBlazor.cs** - XAF ViewItem wrapper:
+**Component** - `Editors/CopilotChatViewItem/CopilotChat.razor`:
+```razor
+@using DevExpress.Blazor.AIIntegration
+<DxAIChat @ref="chat" 
+          CssClass="w-100 vh-100"
+          MessageSent="@OnMessageSent" />
+```
+
+**XAF Wrapper** - `Editors/CopilotChatViewItem/CopilotChatViewItemBlazor.cs`:
 ```csharp
 public class CopilotChatViewItemBlazor : ViewItem, IComponentContentHolder
 {
     RenderFragment IComponentContentHolder.ComponentContent => builder =>
     {
         builder.OpenComponent<CopilotChat>(0);
-        // Configure component
+        builder.AddAttribute(1, "SystemPrompt", SystemPrompt);
+        builder.AddAttribute(2, "InitialMessage", InitialMessage);
         builder.CloseComponent();
     };
 }
 ```
 
-**CopilotChat.razor** - Reusable Blazor component:
-```razor
-@using DevExpress.Blazor.AIIntegration
-<DxAIChat @ref="chat" ... />
+### Services Integration
+
+**GitHub Copilot Client** - `Module/Services/CopilotChatService.cs`:
+```csharp
+public class CopilotChatService
+{
+    private readonly IChatClient _chatClient;
+    
+    public async Task<string> SendMessageAsync(string message)
+    {
+        var response = await _chatClient.CompleteAsync(message);
+        return response.Message.Text;
+    }
+}
 ```
 
-### URL Access Pattern (To Be Added)
+## 📝 Next Steps (To Add URL Access)
 
-The pattern for URL-accessible pages:
+### 1. Create Standalone Page
+
+Add `Pages/Chat.razor`:
 
 ```razor
 @page "/chat"
 @page "/chat/{InitialMessage?}"
+@using XafBlazorViewItemUrlConfiguration.Blazor.Server.Editors.CopilotChatViewItem
 
 <CopilotChat InitialMessage="@InitialMessage" />
 
@@ -55,125 +117,84 @@ The pattern for URL-accessible pages:
 }
 ```
 
-## 🚀 Quick Start
+### 2. Add REST API Endpoint
 
-### Prerequisites
-- .NET 9.0 SDK
-- DevExpress Universal subscription (v25.2+)
-- DevExpress license activated on your machine
+Create `Controllers/ChatController.cs`:
 
-### Build
-
-```bash
-git clone https://github.com/egarim/XafBlazorViewItemUrlConfiguration.git
-cd XafBlazorViewItemUrlConfiguration
-dotnet build XafBlazorViewItemUrlConfiguration/XafBlazorViewItemUrlConfiguration.Blazor.Server/XafBlazorViewItemUrlConfiguration.Blazor.Server.csproj
+```csharp
+[ApiController]
+[Route("api/[controller]")]
+public class ChatController : ControllerBase
+{
+    private readonly CopilotChatService _chatService;
+    
+    [HttpPost]
+    public async Task<IActionResult> Chat([FromBody] ChatRequest request)
+    {
+        var response = await _chatService.SendMessageAsync(request.Message);
+        return Ok(new { message = response });
+    }
+}
 ```
 
-### Run
+## ⚠️ Important Notes
 
-```bash
-cd XafBlazorViewItemUrlConfiguration/XafBlazorViewItemUrlConfiguration.Blazor.Server
-dotnet run
-```
+### DevExpress License Required
 
-Browse to: `https://localhost:5001`
+This project requires DevExpress Universal subscription (v25.2+).
 
-## 📁 Project Structure
-
-```
-XafBlazorViewItemUrlConfiguration/
-├── XafBlazorViewItemUrlConfiguration.Blazor.Server/
-│   ├── Editors/CopilotChatViewItem/
-│   │   ├── CopilotChat.razor              # Reusable component
-│   │   └── CopilotChatViewItemBlazor.cs   # XAF ViewItem wrapper
-│   └── Pages/
-│       └── _Host.cshtml                    # Entry point
-│
-├── XafBlazorViewItemUrlConfiguration.Module/
-│   ├── BusinessObjects/                    # Demo data model
-│   ├── Services/                           # GitHub Copilot SDK integration
-│   └── Controllers/                        # XAF controllers
-│
-└── XafBlazorViewItemUrlConfiguration.Win/  # Windows Forms version (optional)
-```
-
-## 🔧 Key Files
-
-**Component:**
-- `Editors/CopilotChatViewItem/CopilotChat.razor` - The reusable Blazor component
-
-**ViewItem Wrapper:**
-- `Editors/CopilotChatViewItem/CopilotChatViewItemBlazor.cs` - XAF integration
-
-**Services:**
-- `Services/CopilotChatService.cs` - GitHub Copilot SDK client
-- `Services/CopilotChatClient.cs` - Chat client implementation
-- `Services/CopilotToolsProvider.cs` - Tool definitions for AI
-
-**Controllers:**
-- `Controllers/ShowCopilotChatController.cs` - Action to show chat ViewItem
-- `Controllers/SelectCopilotModelController.cs` - Model selection UI
-
-## 🎨 Adapting This Pattern
-
-### 1. Extract Your ViewItem Component
-
-Take any XAF ViewItem and extract its UI to a standalone Blazor component.
-
-### 2. Add URL Page (Next Step)
-
-Create a standalone page that uses your component with URL parameters.
-
-### 3. Add API Endpoint (Optional)
-
-Create a REST API controller for programmatic access.
-
-## 📚 Related Resources
-
-**Original Project:**
-- [XafGitHubCopilot](https://github.com/egarim/XafGitHubCopilot) - Original implementation
-
-**Blog Posts:**
-- [The Day I Integrated GitHub Copilot SDK Inside My XAF App — Part 1](https://www.jocheojeda.com/2026/02/16/the-day-i-integrated-github-copilot-sdk-inside-my-xaf-app-part-1/)
-- [The Day I Integrated GitHub Copilot SDK Inside My XAF App — Part 2](https://www.jocheojeda.com/2026/02/16/the-day-i-integrated-github-copilot-sdk-inside-my-xaf-app-part-2/)
-
-**DevExpress:**
-- [DevExpress XAF](https://www.devexpress.com/xaf)
-- [DevExpress AI Integration](https://www.devexpress.com/blazor/ai-integration/)
-
-## ⚠️ DevExpress License Required
-
-This project uses DevExpress XAF and AI components which require a commercial license.
-
-**To build this project:**
-1. Download your DevExpress license key from devexpress.com/DX1001
-2. Place it in:
+**Activate license:**
+1. Download key from devexpress.com/DX1001
+2. Place in:
    - Windows: `%AppData%\DevExpress\DevExpress_License.txt`
    - macOS: `$HOME/Library/Application Support/DevExpress/DevExpress_License.txt`
    - Linux: `$HOME/.config/DevExpress/DevExpress_License.txt`
 
-**Trial version:**
-- Get a 30-day trial: https://www.devexpress.com/downloads/
+**Trial:** https://www.devexpress.com/downloads/
 
-## 📝 License
+### .NET Version
 
-This is a demonstration project. See DevExpress licensing for commercial use.
+- **This repo:** .NET 9.0 (compatible with current SDK)
+- **Original:** .NET 10 preview (requires preview SDK)
+
+## 📚 Related Resources
+
+**Original Project:**
+- [XafGitHubCopilot](https://github.com/egarim/XafGitHubCopilot) - Source implementation
+
+**Blog Posts:**
+- [Part 1: Integrating GitHub Copilot SDK in XAF](https://www.jocheojeda.com/2026/02/16/the-day-i-integrated-github-copilot-sdk-inside-my-xaf-app-part-1/)
+- [Part 2: Advanced Integration](https://www.jocheojeda.com/2026/02/16/the-day-i-integrated-github-copilot-sdk-inside-my-xaf-app-part-2/)
+
+**DevExpress:**
+- [XAF Documentation](https://docs.devexpress.com/eXpressAppFramework/113577/expressapp-framework)
+- [Blazor AI Integration](https://www.devexpress.com/blazor/ai-integration/)
+
+## 🎯 What Makes This Different
+
+| Feature | This Repo | Original XafGitHubCopilot |
+|---|---|---|
+| .NET Version | 9.0 (stable) | 10.0 (preview) |
+| Builds on Linux | ✅ Yes | ❌ Requires .NET 10 |
+| Projects Included | Module + Blazor | Module + Blazor + Win + WebApi |
+| Purpose | Pattern demonstration | Full production app |
 
 ## 🤝 Contributing
 
-This is a pattern demonstration. For production use:
+This is a demonstration/pattern reference. For production use:
+
 1. Fork this repository
-2. Customize for your domain model
-3. Add URL page implementation
-4. Add REST API endpoints
+2. Add URL page implementation (`Pages/Chat.razor`)
+3. Add REST API (`Controllers/ChatController.cs`)
+4. Customize for your domain model
 
 ## 📧 Author
 
 **Jose Ojeda (Joche)**  
 - Website: https://www.jocheojeda.com
 - GitHub: https://github.com/egarim
+- Original: https://github.com/egarim/XafGitHubCopilot
 
 ---
 
-**Status:** ✅ Working code, ready to adapt
+**Status:** ✅ Working code, builds successfully, ready to extend
