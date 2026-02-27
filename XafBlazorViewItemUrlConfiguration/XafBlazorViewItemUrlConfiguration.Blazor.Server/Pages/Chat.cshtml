@@ -1,0 +1,27 @@
+@page
+@model XafBlazorViewItemUrlConfiguration.Blazor.Server.Pages.ChatPageModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Chat</title>
+    <base href="~/" />
+    <link href="_content/DevExpress.Blazor/dx-blazor.css" rel="stylesheet" />
+    <link href="_content/DevExpress.ExpressApp.Blazor/styles.css" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="app" style="height: 100vh;">
+        <component type="typeof(XafBlazorViewItemUrlConfiguration.Blazor.Server.Pages.ChatComponent)" 
+                   render-mode="ServerPrerendered" 
+                   param-InitialMessage="@Model.Message" />
+    </div>
+
+    <script src="_framework/blazor.server.js"></script>
+    <script src="_content/DevExpress.Blazor/dx-blazor.js"></script>
+</body>
+</html>

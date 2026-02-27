@@ -30,6 +30,7 @@ namespace XafBlazorViewItemUrlConfiguration.Blazor.Server
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddHttpContextAccessor();
+            services.AddControllers(); // Add MVC controllers
             services.AddCopilotSdk(Configuration);
             services.AddDevExpressAI();
             services.AddScoped<CircuitHandler, CircuitHandlerProxy>();
@@ -140,8 +141,9 @@ namespace XafBlazorViewItemUrlConfiguration.Blazor.Server
             {
                 endpoints.MapXafEndpoints();
                 endpoints.MapBlazorHub();
+                endpoints.MapRazorPages();  // Enable Razor Pages
+                endpoints.MapControllers(); // Enable API controllers
                 endpoints.MapFallbackToPage("/_Host");
-                endpoints.MapControllers();
             });
         }
     }
