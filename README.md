@@ -198,3 +198,39 @@ This is a demonstration/pattern reference. For production use:
 ---
 
 **Status:** ✅ Working code, builds successfully, ready to extend
+
+---
+
+## 🎯 **URL Access - NOW WORKING!**
+
+### ✅ What's Available
+
+| Access Method | URL | Auth Required |
+|---|---|---|
+| **Traditional XAF** | `https://localhost:5001` → Login | ✅ Yes |
+| **Direct URL** | `https://localhost:5001/chat?message=Hello` | ❌ No |
+| **REST API** | `POST https://localhost:5001/api/chat` | ❌ No |
+
+### 📖 Quick Examples
+
+#### 1. Direct Chat Page
+```
+https://localhost:5001/chat
+https://localhost:5001/chat?message=Show me today's orders
+https://localhost:5001/chat?message=List products&context=inventory
+```
+
+#### 2. REST API
+```bash
+# Health check
+curl https://localhost:5001/api/chat/health
+
+# Send message
+curl -X POST https://localhost:5001/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Show me top customers"}'
+```
+
+**📚 Full documentation:** [URL_EXAMPLES.md](URL_EXAMPLES.md)
+
+---
