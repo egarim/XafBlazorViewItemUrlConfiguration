@@ -1,10 +1,8 @@
 <Solution>
   <Configurations>
     <BuildType Name="Debug" />
-    <BuildType Name="EasyTest" />
     <BuildType Name="Release" />
   </Configurations>
-  <Project Path="XafBlazorViewItemUrlConfiguration/XafBlazorViewItemUrlConfiguration.Blazor.Server/XafBlazorViewItemUrlConfiguration.Blazor.Server.csproj" />
   <Project Path="XafBlazorViewItemUrlConfiguration/XafBlazorViewItemUrlConfiguration.Module/XafBlazorViewItemUrlConfiguration.Module.csproj" />
-  <Project Path="XafBlazorViewItemUrlConfiguration/XafBlazorViewItemUrlConfiguration.Win/XafBlazorViewItemUrlConfiguration.Win.csproj" />
+  <Project Path="XafBlazorViewItemUrlConfiguration/XafBlazorViewItemUrlConfiguration.Blazor.Server/XafBlazorViewItemUrlConfiguration.Blazor.Server.csproj" />
 </Solution>
