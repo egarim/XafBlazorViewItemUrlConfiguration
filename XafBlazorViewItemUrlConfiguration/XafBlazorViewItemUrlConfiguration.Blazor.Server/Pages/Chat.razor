@@ -1,0 +1,71 @@
+@page "/chat"
+@page "/chat/{InitialMessage?}"
+@namespace XafBlazorViewItemUrlConfiguration.Blazor.Server.Pages
+@using XafBlazorViewItemUrlConfiguration.Blazor.Server.Editors.CopilotChatViewItem
+@using Microsoft.AspNetCore.Components
+
+<PageTitle>AI Chat - XAF</PageTitle>
+
+<div class="standalone-chat-page">
+    <CopilotChat />
+    
+    @if (!string.IsNullOrEmpty(InitialMessage))
+    {
+        <div class="url-params-info">
+            <small>Pre-loaded from URL: <code>@InitialMessage</code></small>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string? InitialMessage { get; set; }
+    
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "message")]
+    public string? MessageFromQuery { get; set; }
+    
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "context")]
+    public string? Context { get; set; }
+    
+    protected override void OnInitialized()
+    {
+        // Prefer query parameter over route parameter
+        if (!string.IsNullOrEmpty(MessageFromQuery))
+        {
+            InitialMessage = MessageFromQuery;
+        }
+        
+        if (!string.IsNullOrEmpty(Context))
+        {
+            InitialMessage = $"{InitialMessage}\nContext: {Context}";
+        }
+    }
+}
+
+<style>
+    .standalone-chat-page {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .url-params-info {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        background: #f0f0f0;
+        padding: 8px 12px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .url-params-info code {
+        background: #fff;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: monospace;
+    }
+</style>
