@@ -11,9 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
-using XafCopilotStandalone.Module.BusinessObjects;
+using XafBlazorViewItemUrlConfiguration.Module.BusinessObjects;
 
-namespace XafCopilotStandalone.WebApi.JWT {
+namespace XafBlazorViewItemUrlConfiguration.WebApi.JWT {
     [ApiController]
     [Route("api/[controller]")]
     // This is a JWT authentication service sample.

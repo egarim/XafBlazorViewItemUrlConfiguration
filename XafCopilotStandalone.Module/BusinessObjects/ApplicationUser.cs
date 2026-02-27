@@ -8,7 +8,7 @@ using DevExpress.ExpressApp.Security;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
 using DevExpress.Xpo;
 
-namespace XafCopilotStandalone.Module.BusinessObjects {
+namespace XafBlazorViewItemUrlConfiguration.Module.BusinessObjects {
     [MapInheritance(MapInheritanceType.ParentTable)]
     [DefaultProperty(nameof(UserName))]
     public class ApplicationUser : PermissionPolicyUser, IObjectSpaceLink, ISecurityUserWithLoginInfo {

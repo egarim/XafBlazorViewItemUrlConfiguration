@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using DevExpress.ExpressApp.Blazor.Services;
 using Microsoft.AspNetCore.Components.Server.Circuits;
 
-namespace XafCopilotStandalone.Blazor.Server.Services {
+namespace XafBlazorViewItemUrlConfiguration.Blazor.Server.Services {
     internal class CircuitHandlerProxy : CircuitHandler {
         private readonly IScopedCircuitHandler scopedCircuitHandler;
         public CircuitHandlerProxy(IScopedCircuitHandler scopedCircuitHandler) {

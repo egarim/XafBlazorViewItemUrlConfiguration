@@ -1,5 +1,5 @@
-﻿namespace XafCopilotStandalone.Blazor.Server {
-    partial class XafCopilotStandaloneBlazorApplication {
+﻿namespace XafBlazorViewItemUrlConfiguration.Blazor.Server {
+    partial class XafBlazorViewItemUrlConfigurationBlazorApplication {
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -25,8 +25,8 @@
         private void InitializeComponent() {
             this.module1 = new DevExpress.ExpressApp.SystemModule.SystemModule();
             this.module2 = new DevExpress.ExpressApp.Blazor.SystemModule.SystemBlazorModule();
-            this.module3 = new XafCopilotStandalone.Module.XafCopilotStandaloneModule();
-            this.module4 = new XafCopilotStandalone.Module.Blazor.XafCopilotStandaloneBlazorModule();
+            this.module3 = new XafBlazorViewItemUrlConfiguration.Module.XafBlazorViewItemUrlConfigurationModule();
+            this.module4 = new XafBlazorViewItemUrlConfiguration.Module.Blazor.XafBlazorViewItemUrlConfigurationBlazorModule();
             this.securityModule1 = new DevExpress.ExpressApp.Security.SecurityModule();
             this.auditTrailModule = new DevExpress.ExpressApp.AuditTrail.AuditTrailModule();
             this.objectsModule = new DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule();
@@ -69,9 +69,9 @@
             //
             this.validationModule.AllowValidationDetailsAccess = false;
             // 
-            // XafCopilotStandaloneBlazorApplication
+            // XafBlazorViewItemUrlConfigurationBlazorApplication
             // 
-            this.ApplicationName = "XafCopilotStandalone";
+            this.ApplicationName = "XafBlazorViewItemUrlConfiguration";
             this.CheckCompatibilityType = DevExpress.ExpressApp.CheckCompatibilityType.DatabaseSchema;
             this.Modules.Add(this.module1);
             this.Modules.Add(this.module2);
@@ -93,7 +93,7 @@
             this.Modules.Add(this.validationModule);
             this.Modules.Add(this.validationBlazorModule);
             this.Modules.Add(this.viewVariantsModule);
-            this.DatabaseVersionMismatch += new System.EventHandler<DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs>(this.XafCopilotStandaloneBlazorApplication_DatabaseVersionMismatch);
+            this.DatabaseVersionMismatch += new System.EventHandler<DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs>(this.XafBlazorViewItemUrlConfigurationBlazorApplication_DatabaseVersionMismatch);
 
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
@@ -103,8 +103,8 @@
 
         private DevExpress.ExpressApp.SystemModule.SystemModule module1;
         private DevExpress.ExpressApp.Blazor.SystemModule.SystemBlazorModule module2;
-        private XafCopilotStandalone.Module.XafCopilotStandaloneModule module3;
-        private XafCopilotStandalone.Module.Blazor.XafCopilotStandaloneBlazorModule module4;
+        private XafBlazorViewItemUrlConfiguration.Module.XafBlazorViewItemUrlConfigurationModule module3;
+        private XafBlazorViewItemUrlConfiguration.Module.Blazor.XafBlazorViewItemUrlConfigurationBlazorModule module4;
         private DevExpress.ExpressApp.Security.SecurityModule securityModule1;
         private DevExpress.ExpressApp.AuditTrail.AuditTrailModule auditTrailModule;
         private DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule objectsModule;

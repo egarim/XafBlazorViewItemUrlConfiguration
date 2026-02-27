@@ -1,5 +1,5 @@
-﻿namespace XafCopilotStandalone.Module.Blazor {
-    partial class XafCopilotStandaloneBlazorModule {
+﻿namespace XafBlazorViewItemUrlConfiguration.Module.Blazor {
+    partial class XafBlazorViewItemUrlConfigurationBlazorModule {
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -24,9 +24,9 @@
         /// </summary>
         private void InitializeComponent() {
             // 
-            // XafCopilotStandaloneBlazorModule
+            // XafBlazorViewItemUrlConfigurationBlazorModule
             // 
-            this.RequiredModuleTypes.Add(typeof(XafCopilotStandalone.Module.XafCopilotStandaloneModule));
+            this.RequiredModuleTypes.Add(typeof(XafBlazorViewItemUrlConfiguration.Module.XafBlazorViewItemUrlConfigurationModule));
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Blazor.SystemModule.SystemBlazorModule));
 			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Dashboards.Blazor.DashboardsBlazorModule));
 			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.FileAttachments.Blazor.FileAttachmentsBlazorModule));

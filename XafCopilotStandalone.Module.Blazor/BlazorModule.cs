@@ -14,10 +14,10 @@ using DevExpress.ExpressApp.Model.DomainLogics;
 using DevExpress.ExpressApp.Model.NodeGenerators;
 using DevExpress.Persistent.BaseImpl;
 
-namespace XafCopilotStandalone.Module.Blazor {
+namespace XafBlazorViewItemUrlConfiguration.Module.Blazor {
     [ToolboxItemFilter("Xaf.Platform.Blazor")]
     // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.ModuleBase.
-    public sealed partial class XafCopilotStandaloneBlazorModule : ModuleBase {
+    public sealed partial class XafBlazorViewItemUrlConfigurationBlazorModule : ModuleBase {
         //private void Application_CreateCustomModelDifferenceStore(Object sender, CreateCustomModelDifferenceStoreEventArgs e) {
         //    e.Store = new ModelDifferenceDbStore((XafApplication)sender, typeof(ModelDifference), true, "Blazor");
         //    e.Handled = true;
@@ -26,7 +26,7 @@ namespace XafCopilotStandalone.Module.Blazor {
             e.Store = new ModelDifferenceDbStore((XafApplication)sender, typeof(ModelDifference), false, "Blazor");
             e.Handled = true;
         }
-        public XafCopilotStandaloneBlazorModule() {
+        public XafBlazorViewItemUrlConfigurationBlazorModule() {
             InitializeComponent();
         }
         public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB) {

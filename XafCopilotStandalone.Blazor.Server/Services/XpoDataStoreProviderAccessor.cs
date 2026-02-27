@@ -1,7 +1,7 @@
 ﻿using System;
 using DevExpress.ExpressApp.Xpo;
 
-namespace XafCopilotStandalone.Blazor.Server.Services {
+namespace XafBlazorViewItemUrlConfiguration.Blazor.Server.Services {
     public class XpoDataStoreProviderAccessor {
         public IXpoDataStoreProvider DataStoreProvider { get; set; }
     }

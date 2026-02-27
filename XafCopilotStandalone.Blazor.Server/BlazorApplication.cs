@@ -7,11 +7,11 @@ using DevExpress.ExpressApp.SystemModule;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using DevExpress.ExpressApp.Xpo;
-using XafCopilotStandalone.Blazor.Server.Services;
+using XafBlazorViewItemUrlConfiguration.Blazor.Server.Services;
 
-namespace XafCopilotStandalone.Blazor.Server {
-    public partial class XafCopilotStandaloneBlazorApplication : BlazorApplication {
-        public XafCopilotStandaloneBlazorApplication() {
+namespace XafBlazorViewItemUrlConfiguration.Blazor.Server {
+    public partial class XafBlazorViewItemUrlConfigurationBlazorApplication : BlazorApplication {
+        public XafBlazorViewItemUrlConfigurationBlazorApplication() {
             InitializeComponent();
         }
         protected override void OnSetupStarted() {
@@ -35,7 +35,7 @@ namespace XafCopilotStandalone.Blazor.Server {
             }
             return accessor.DataStoreProvider;
         }
-        private void XafCopilotStandaloneBlazorApplication_DatabaseVersionMismatch(object sender, DatabaseVersionMismatchEventArgs e) {
+        private void XafBlazorViewItemUrlConfigurationBlazorApplication_DatabaseVersionMismatch(object sender, DatabaseVersionMismatchEventArgs e) {
             if(System.Diagnostics.Debugger.IsAttached) {
                 e.Updater.Update();
                 e.Handled = true;

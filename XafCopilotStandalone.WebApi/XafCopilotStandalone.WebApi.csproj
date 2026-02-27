@@ -29,6 +29,6 @@
     <PackageReference Include="Npgsql" Version="$(Postgres)" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XafCopilotStandalone.Module\XafCopilotStandalone.Module.csproj" />
+    <ProjectReference Include="..\XafBlazorViewItemUrlConfiguration.Module\XafBlazorViewItemUrlConfiguration.Module.csproj" />
   </ItemGroup>
 </Project>

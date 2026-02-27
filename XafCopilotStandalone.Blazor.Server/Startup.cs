@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using XafCopilotStandalone.Blazor.Server.Services;
+using XafBlazorViewItemUrlConfiguration.Blazor.Server.Services;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -27,9 +27,9 @@ using DevExpress.ExpressApp.WebApi.Services;
 using DevExpress.ExpressApp.WebApi.Swashbuckle;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.OData;
-using XafCopilotStandalone.WebApi.JWT;
+using XafBlazorViewItemUrlConfiguration.WebApi.JWT;
 
-namespace XafCopilotStandalone.Blazor.Server {
+namespace XafBlazorViewItemUrlConfiguration.Blazor.Server {
     public class Startup {
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
@@ -47,7 +47,7 @@ namespace XafCopilotStandalone.Blazor.Server {
             services.AddHttpContextAccessor();
             services.AddSingleton<XpoDataStoreProviderAccessor>();
             services.AddScoped<CircuitHandler, CircuitHandlerProxy>();
-            services.AddXaf<XafCopilotStandaloneBlazorApplication>(Configuration);
+            services.AddXaf<XafBlazorViewItemUrlConfigurationBlazorApplication>(Configuration);
             services.AddXafReporting();
             services.AddXafDashboards();
             services.AddXafOffice();
@@ -55,10 +55,10 @@ namespace XafCopilotStandalone.Blazor.Server {
                 options.RoleType = typeof(PermissionPolicyRole);
                 // ApplicationUser descends from PermissionPolicyUser and supports the OAuth authentication. For more information, refer to the following topic: https://docs.devexpress.com/eXpressAppFramework/402197
                 // If your application uses PermissionPolicyUser or a custom user type, set the UserType property as follows:
-                options.UserType = typeof(XafCopilotStandalone.Module.BusinessObjects.ApplicationUser);
+                options.UserType = typeof(XafBlazorViewItemUrlConfiguration.Module.BusinessObjects.ApplicationUser);
                 // ApplicationUserLoginInfo is only necessary for applications that use the ApplicationUser user type.
                 // If you use PermissionPolicyUser or a custom user type, comment out the following line:
-                options.UserLoginInfoType = typeof(XafCopilotStandalone.Module.BusinessObjects.ApplicationUserLoginInfo);
+                options.UserLoginInfoType = typeof(XafBlazorViewItemUrlConfiguration.Module.BusinessObjects.ApplicationUserLoginInfo);
                 options.Events.OnSecurityStrategyCreated = securityStrategy => ((SecurityStrategy)securityStrategy).RegisterXPOAdapterProviders();
                 options.SupportNavigationPermissionsForTypes = false;
             })
@@ -96,9 +96,9 @@ namespace XafCopilotStandalone.Blazor.Server {
             services.AddSwaggerGen(c => {
                 c.EnableAnnotations();
                 c.SwaggerDoc("v1", new OpenApiInfo {
-                    Title = "XafCopilotStandalone API",
+                    Title = "XafBlazorViewItemUrlConfiguration API",
                     Version = "v1",
-                    Description = @"Use AddXafWebApi(options) in the XafCopilotStandalone.Blazor.Server\Startup.cs file to make Business Objects available in the Web API."
+                    Description = @"Use AddXafWebApi(options) in the XafBlazorViewItemUrlConfiguration.Blazor.Server\Startup.cs file to make Business Objects available in the Web API."
                 });
                 c.SchemaFilter<XpoSchemaFilter>();
                 c.AddSecurityDefinition("JWT", new OpenApiSecurityScheme() {
@@ -129,7 +129,7 @@ namespace XafCopilotStandalone.Blazor.Server {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "XafCopilotStandalone WebApi v1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "XafBlazorViewItemUrlConfiguration WebApi v1");
                 });
             }
             else {

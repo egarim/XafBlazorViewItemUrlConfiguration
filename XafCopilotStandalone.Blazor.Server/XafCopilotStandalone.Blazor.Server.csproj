@@ -44,7 +44,7 @@
     <PackageReference Include="Npgsql" Version="$(Postgres)" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XafCopilotStandalone.Module.Blazor\XafCopilotStandalone.Module.Blazor.csproj" />
-    <ProjectReference Include="..\XafCopilotStandalone.Module\XafCopilotStandalone.Module.csproj" />
+    <ProjectReference Include="..\XafBlazorViewItemUrlConfiguration.Module.Blazor\XafBlazorViewItemUrlConfiguration.Module.Blazor.csproj" />
+    <ProjectReference Include="..\XafBlazorViewItemUrlConfiguration.Module\XafBlazorViewItemUrlConfiguration.Module.csproj" />
   </ItemGroup>
 </Project>

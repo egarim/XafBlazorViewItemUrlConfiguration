@@ -18,10 +18,10 @@ using DevExpress.ExpressApp.Model.NodeGenerators;
 using DevExpress.Xpo;
 using DevExpress.ExpressApp.Xpo;
 
-namespace XafCopilotStandalone.Module {
+namespace XafBlazorViewItemUrlConfiguration.Module {
     // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.ModuleBase.
-    public sealed partial class XafCopilotStandaloneModule : ModuleBase {
-        public XafCopilotStandaloneModule() {
+    public sealed partial class XafBlazorViewItemUrlConfigurationModule : ModuleBase {
+        public XafBlazorViewItemUrlConfigurationModule() {
             InitializeComponent();
         }
         public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB) {

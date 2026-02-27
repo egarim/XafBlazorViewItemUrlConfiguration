@@ -28,6 +28,6 @@
     <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="$(DevExpressVersion)" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XafCopilotStandalone.Module\XafCopilotStandalone.Module.csproj" />
+    <ProjectReference Include="..\XafBlazorViewItemUrlConfiguration.Module\XafBlazorViewItemUrlConfiguration.Module.csproj" />
   </ItemGroup>
 </Project>

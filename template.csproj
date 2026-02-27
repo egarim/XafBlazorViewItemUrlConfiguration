@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageType>XafCopilotStandalone</PackageType>
+    <PackageType>XafBlazorViewItemUrlConfiguration</PackageType>
     <PackageVersion>1.0.3</PackageVersion>
     <PackageId>Xaf.Blazor</PackageId>
-    <Title>Xaf Blazor XafCopilotStandalone</Title>
+    <Title>Xaf Blazor XafBlazorViewItemUrlConfiguration</Title>
     <Authors>Joche Ojeda</Authors>
     <Description>A xafcopilotstandalone to create a new XAF blazor application using dotnet CLI</Description>
     <PackageTags>dotnet-new;DevExpress;XAF;BLazor</PackageTags>
@@ -23,7 +23,7 @@
 </ItemGroup>
   <ItemGroup>
     <Content Include="**\*"
-     Exclude="xafcopilotstandalone.csproj;xafcopilotstandalone.json;XafCopilotStandalone.Blazor.Server\*.db;XafCopilotStandalone.Blazor.Server\bin\**;XafCopilotStandalone.Module\bin\**;XafCopilotStandalone.Module.Blazor\bin\**;.git\**;.cr\**;.vs\**;Pack.bat;pack.sh;xafcopilotstandalone.csproj;README.md;*.pack.sh" 
+     Exclude="xafcopilotstandalone.csproj;xafcopilotstandalone.json;XafBlazorViewItemUrlConfiguration.Blazor.Server\*.db;XafBlazorViewItemUrlConfiguration.Blazor.Server\bin\**;XafBlazorViewItemUrlConfiguration.Module\bin\**;XafBlazorViewItemUrlConfiguration.Module.Blazor\bin\**;.git\**;.cr\**;.vs\**;Pack.bat;pack.sh;xafcopilotstandalone.csproj;README.md;*.pack.sh" 
     />
     <Compile Remove="**\*" />
   </ItemGroup>

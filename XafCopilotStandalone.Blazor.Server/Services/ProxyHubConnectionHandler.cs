@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace XafCopilotStandalone.Blazor.Server.Services {
+namespace XafBlazorViewItemUrlConfiguration.Blazor.Server.Services {
     internal class ProxyHubConnectionHandler<THub> : HubConnectionHandler<THub> where THub : Hub {
         private readonly IValueManagerStorageContainerInitializer storageContainerInitializer;
         public ProxyHubConnectionHandler(

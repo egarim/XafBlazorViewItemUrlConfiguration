@@ -1,5 +1,5 @@
-﻿namespace XafCopilotStandalone.WebApi {
-    partial class XafCopilotStandaloneWebApiApplication {
+﻿namespace XafBlazorViewItemUrlConfiguration.WebApi {
+    partial class XafBlazorViewItemUrlConfigurationWebApiApplication {
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -25,7 +25,7 @@
         private void InitializeComponent() {
             this.module1 = new DevExpress.ExpressApp.SystemModule.SystemModule();
             //this.module2 = new DevExpress.ExpressApp.WebApi.SystemModule.SystemWebApiModule();
-            this.module3 = new XafCopilotStandalone.Module.XafCopilotStandaloneModule();
+            this.module3 = new XafBlazorViewItemUrlConfiguration.Module.XafBlazorViewItemUrlConfigurationModule();
             this.securityModule1 = new DevExpress.ExpressApp.Security.SecurityModule();
             this.auditTrailModule = new DevExpress.ExpressApp.AuditTrail.AuditTrailModule();
             this.objectsModule = new DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule();
@@ -63,9 +63,9 @@
             //
             this.validationModule.AllowValidationDetailsAccess = false;
             // 
-            // XafCopilotStandaloneWebApiApplication
+            // XafBlazorViewItemUrlConfigurationWebApiApplication
             // 
-            this.ApplicationName = "XafCopilotStandalone";
+            this.ApplicationName = "XafBlazorViewItemUrlConfiguration";
             this.CheckCompatibilityType = DevExpress.ExpressApp.CheckCompatibilityType.DatabaseSchema;
             this.Modules.Add(this.module1);
             //this.Modules.Add(this.module2);
@@ -81,7 +81,7 @@
             this.Modules.Add(this.stateMachineModule);
             this.Modules.Add(this.validationModule);
             this.Modules.Add(this.viewVariantsModule);
-            this.DatabaseVersionMismatch += new System.EventHandler<DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs>(this.XafCopilotStandaloneWebApiApplication_DatabaseVersionMismatch);
+            this.DatabaseVersionMismatch += new System.EventHandler<DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs>(this.XafBlazorViewItemUrlConfigurationWebApiApplication_DatabaseVersionMismatch);
 
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
@@ -91,7 +91,7 @@
 
         private DevExpress.ExpressApp.SystemModule.SystemModule module1;
         //private DevExpress.ExpressApp.WebApi.SystemModule.SystemWebApiModule module2;
-        private XafCopilotStandalone.Module.XafCopilotStandaloneModule module3;
+        private XafBlazorViewItemUrlConfiguration.Module.XafBlazorViewItemUrlConfigurationModule module3;
         private DevExpress.ExpressApp.Security.SecurityModule securityModule1;
         private DevExpress.ExpressApp.AuditTrail.AuditTrailModule auditTrailModule;
         private DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule objectsModule;

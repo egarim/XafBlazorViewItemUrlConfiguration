@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.AI;
 using System.ComponentModel.DataAnnotations;
 
-namespace XafCopilotStandalone.WebApi.Controllers
+namespace XafBlazorViewItemUrlConfiguration.WebApi.Controllers
 {
     /// <summary>
     /// REST API endpoint for AI chat interactions.

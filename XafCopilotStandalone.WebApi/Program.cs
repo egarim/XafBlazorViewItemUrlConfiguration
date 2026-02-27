@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace XafCopilotStandalone.WebApi {
+namespace XafBlazorViewItemUrlConfiguration.WebApi {
     public class Program : IDesignTimeApplicationFactory {
         private static bool ContainsArgument(string[] args, string argument) {
             return args.Any(arg => arg.TrimStart('/').TrimStart('-').ToLower() == argument.ToLower());

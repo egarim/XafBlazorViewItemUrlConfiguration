@@ -1,5 +1,5 @@
-﻿namespace XafCopilotStandalone.Module {
-	partial class XafCopilotStandaloneModule {
+﻿namespace XafBlazorViewItemUrlConfiguration.Module {
+	partial class XafBlazorViewItemUrlConfigurationModule {
 		/// <summary> 
 		/// Required designer variable.
 		/// </summary>
@@ -24,7 +24,7 @@
 		/// </summary>
 		private void InitializeComponent() {
 			// 
-			// XafCopilotStandaloneModule
+			// XafBlazorViewItemUrlConfigurationModule
 			// 
 		    this.AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.ModelDifference));
 		    this.AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.ModelDifferenceAspect));

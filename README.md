@@ -1,32 +1,134 @@
-# XAF Copilot Standalone - Three Ways to Integrate AI Chat
+# XAF Blazor ViewItem URL Configuration
 
-This project demonstrates **three different approaches** to integrate GitHub Copilot SDK AI chat into a DevExpress XAF Blazor application.
+**How to make XAF ViewItems accessible via direct URL with parameters in Blazor**
 
-## 🎯 Three Approaches Demonstrated
+This project demonstrates how to expose XAF ViewItems as standalone pages with URL parameter configuration, plus REST API access - all using the same component.
 
-### 1️⃣ **XAF ViewItem** (Traditional XAF Integration)
-- **What:** AI chat embedded as an XAF ViewItem
-- **Access:** Via XAF navigation after login
-- **Security:** Full XAF security integration
-- **Use case:** Internal business app with full XAF features
-- **URL:** `https://yourapp.com/` → Login → Navigate to "AI Assistant"
+## 🎯 The Problem This Solves
 
-### 2️⃣ **Standalone Blazor Page** (Direct URL Access)
-- **What:** `/chat` page accepting URL parameters
-- **Access:** Direct URL with optional pre-populated messages
-- **Security:** Optional (can be public or token-protected)
-- **Use case:** Shareable chat links, embeddable widget, simple AI interface
-- **URL Examples:**
-  - `https://yourapp.com/chat`
-  - `https://yourapp.com/chat?message=Hello`
-  - `https://yourapp.com/chat?message=Show order 123&context=order123`
+**Traditional XAF ViewItems:**
+- ❌ Only accessible after login + navigation
+- ❌ No direct URL access
+- ❌ Can't share links to specific views
+- ❌ No URL parameters
 
-### 3️⃣ **REST API Endpoint** (Programmatic Access)
-- **What:** HTTP POST endpoint for AI chat
-- **Access:** REST API call from any client
-- **Security:** Token-based auth (configurable)
-- **Use case:** Mobile apps, external systems, automation scripts
-- **Endpoint:** `POST /api/chat`
+**This Solution:**
+- ✅ Direct URL access: `/chat?message=Hello`
+- ✅ URL parameters configure ViewItem state
+- ✅ Shareable links
+- ✅ Embeddable in other apps
+- ✅ REST API for programmatic access
+
+---
+
+## 🚀 Three Integration Approaches
+
+### 1️⃣ **Traditional XAF ViewItem** (Baseline)
+**What:** Standard XAF ViewItem embedded in application
+**Access:** Login → Navigate → View
+**Use case:** Internal business app with full XAF security
+
+```
+https://yourapp.com/ → Login → Navigate to "AI Chat"
+```
+
+### 2️⃣ **URL-Configurable Standalone Page** (★ Main Feature)
+**What:** Blazor page exposing ViewItem via direct URL
+**Access:** Direct URL with parameters
+**Use case:** Shareable links, bookmarks, QR codes, embeds
+
+**Examples:**
+```
+https://yourapp.com/chat
+https://yourapp.com/chat?message=Hello
+https://yourapp.com/chat?message=Show order 123&context=order123
+```
+
+**URL Parameters:**
+- `message` - Pre-populate initial message
+- `context` - Pass context data (orderId, userId, etc.)
+
+### 3️⃣ **REST API Endpoint** (Bonus)
+**What:** HTTP API for programmatic access
+**Access:** POST request with JSON
+**Use case:** Mobile apps, external systems, automation
+
+**Endpoint:**
+```bash
+POST https://yourapp.com/api/chat
+{
+  "message": "List all orders",
+  "context": { "userId": "123" }
+}
+```
+
+---
+
+## 📖 Example: AI Chat ViewItem
+
+This demo uses an **AI Chat component** (GitHub Copilot SDK) as the ViewItem example, but **the URL configuration pattern works for ANY XAF ViewItem**.
+
+**The same approach can be used for:**
+- Order detail views → `/order?id=123`
+- Customer profiles → `/customer?id=456&tab=orders`
+- Reports → `/report?type=sales&month=2026-02`
+- Dashboard widgets → `/dashboard?widget=sales&period=today`
+
+---
+
+## 🏗️ How It Works
+
+### Architecture
+
+```
+Traditional XAF ViewItem (secured, full XAF)
+         ↓
+    Shared Component
+   (CopilotChat.razor)
+         ↓
+         ├──→ Standalone Page (/chat) ← URL Parameters
+         └──→ REST API (/api/chat) ← JSON Request
+```
+
+### Key Components
+
+**1. Shared ViewItem Component**
+```
+XafBlazorViewItemUrlConfiguration.Blazor.Server/
+└── Editors/CopilotChatViewItem/
+    ├── CopilotChat.razor              ← Reusable component
+    └── CopilotChatViewItemBlazor.cs   ← XAF ViewItem wrapper
+```
+
+**2. Standalone Page with URL Parameters**
+```
+XafBlazorViewItemUrlConfiguration.Blazor.Server/
+└── Pages/
+    └── Chat.razor                     ← URL-accessible page
+```
+
+**Code snippet:**
+```csharp
+@page "/chat"
+@page "/chat/{InitialMessage?}"
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "message")]
+    public string? InitialMessage { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "context")]
+    public string? Context { get; set; }
+}
+```
+
+**3. REST API Controller**
+```
+XafBlazorViewItemUrlConfiguration.WebApi/
+└── Controllers/
+    └── ChatController.cs              ← HTTP endpoint
+```
 
 ---
 
@@ -34,23 +136,23 @@ This project demonstrates **three different approaches** to integrate GitHub Cop
 
 ### Prerequisites
 - .NET 9.0 SDK
-- GitHub Copilot subscription (for API access)
-- DevExpress license (XAF + Blazor components)
+- DevExpress XAF license
+- GitHub Copilot API key (for this demo)
 
 ### 1. Clone & Restore
 ```bash
-git clone https://github.com/egarim/XafCopilotStandalone.git
-cd XafCopilotStandalone
-dotnet restore
+git clone https://github.com/egarim/XafBlazorViewItemUrlConfiguration.git
+cd XafBlazorViewItemUrlConfiguration
+dotnet restore XafBlazorViewItemUrlConfiguration.sln
 ```
 
-### 2. Configure GitHub Copilot
-Edit `appsettings.json` in both Blazor.Server and WebApi projects:
+### 2. Configure API Key
+Edit `appsettings.json` in both projects:
 
 ```json
 {
   "GitHubCopilot": {
-    "ApiKey": "your-github-copilot-api-key",
+    "ApiKey": "your-copilot-api-key",
     "Model": "gpt-4o"
   }
 }
@@ -58,319 +160,315 @@ Edit `appsettings.json` in both Blazor.Server and WebApi projects:
 
 ### 3. Run
 ```bash
-# Blazor Server (includes XAF + standalone page)
-cd XafCopilotStandalone.Blazor.Server
+# Terminal 1: Blazor Server (port 5001)
+cd XafBlazorViewItemUrlConfiguration.Blazor.Server
 dotnet run
 
-# Web API (REST endpoint)
-cd XafCopilotStandalone.WebApi
+# Terminal 2: Web API (port 5002)
+cd XafBlazorViewItemUrlConfiguration.WebApi
 dotnet run
 ```
 
----
+### 4. Test
 
-## 📖 Usage Guide
-
-### Approach 1: XAF ViewItem
-
-**1. Login to XAF application**
+**Traditional XAF:**
 ```
 https://localhost:5001
-Username: Admin
-Password: (empty)
+Login: Admin / (empty password)
+Navigate to: "Copilot Chat"
 ```
 
-**2. Navigate to AI Assistant**
-- Main Menu → "Copilot Chat" (or wherever you've placed the ViewItem)
-
-**3. Ask questions**
-```
-"List all orders"
-"Create a new employee named John Doe"
-"Show me today's sales"
-```
-
-**Features:**
-- ✅ Full XAF security (user permissions)
-- ✅ Access to XAF Object Space (can query/create business objects)
-- ✅ Integrated into XAF UI
-- ✅ Conversation history persisted per user
-
----
-
-### Approach 2: Standalone Page
-
-**Direct Access (no login required):**
+**Direct URL Access:**
 ```
 https://localhost:5001/chat
-```
-
-**With pre-populated message:**
-```
-https://localhost:5001/chat?message=Hello, who are you?
-```
-
-**With context data:**
-```
-https://localhost:5001/chat?message=Show me this order&context=order123
-```
-
-**URL Parameters:**
-| Parameter | Type | Description | Example |
-|---|---|---|---|
-| `message` | string | Pre-populate initial message | `?message=Hello` |
-| `context` | string | Pass context data | `?context=userId:123` |
-
-**Features:**
-- ✅ No login required (configurable)
-- ✅ Shareable links
-- ✅ URL parameters for automation
-- ✅ Clean, standalone UI
-- ✅ Can be embedded in iframe
-
-**Example use cases:**
-- Share a chat link: "Click here to ask AI about your order"
-- Bookmarklet: `javascript:window.open('/chat?message='+encodeURIComponent(window.getSelection()))`
-- QR code on receipts → `/chat?message=Track order&context=order123`
-
----
-
-### Approach 3: REST API
-
-**Endpoint:**
-```
-POST https://localhost:5002/api/chat
-```
-
-**Request Body:**
-```json
-{
-  "message": "List all orders",
-  "context": {
-    "userId": "123",
-    "orderId": "456"
-  },
-  "history": [
-    {
-      "role": "user",
-      "content": "Previous question"
-    },
-    {
-      "role": "assistant",
-      "content": "Previous answer"
-    }
-  ]
-}
-```
-
-**Response:**
-```json
-{
-  "message": "Here are all the orders:\n\n1. Order #123...",
-  "timestamp": "2026-02-27T10:00:00Z",
-  "model": "gpt-4o",
-  "tokensUsed": 245
-}
-```
-
-**cURL Example:**
-```bash
-curl -X POST https://localhost:5002/api/chat \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "List all orders",
-    "context": {
-      "userId": "123"
-    }
-  }'
-```
-
-**C# Client Example:**
-```csharp
-using var client = new HttpClient();
-var request = new ChatRequest
-{
-    Message = "List all orders",
-    Context = new Dictionary<string, string>
-    {
-        ["userId"] = "123"
-    }
-};
-
-var response = await client.PostAsJsonAsync(
-    "https://localhost:5002/api/chat",
-    request
-);
-
-var result = await response.Content.ReadFromJsonAsync<ChatResponse>();
-Console.WriteLine(result.Message);
-```
-
-**Features:**
-- ✅ Language-agnostic (REST)
-- ✅ Stateless (pass conversation history if needed)
-- ✅ JSON request/response
-- ✅ Token tracking
-- ✅ Error handling
-- ✅ Health check endpoint
-
-**Example use cases:**
-- Mobile app integration
-- Automation scripts
-- External system integration
-- Chatbot platforms (Telegram, Discord, Slack)
-
----
-
-## 🏗️ Project Structure
-
-```
-XafCopilotStandalone/
-├── XafCopilotStandalone.Blazor.Server/     # Blazor Server App
-│   ├── Editors/
-│   │   └── CopilotChatViewItem/            # XAF ViewItem (Approach 1)
-│   │       ├── CopilotChat.razor           # Shared chat component
-│   │       └── CopilotChatViewItemBlazor.cs
-│   └── Pages/
-│       └── Chat.razor                       # Standalone page (Approach 2)
-│
-├── XafCopilotStandalone.WebApi/            # Web API Project
-│   └── Controllers/
-│       └── ChatController.cs                # REST API (Approach 3)
-│
-├── XafCopilotStandalone.Module/            # Shared Module
-│   └── Services/
-│       ├── CopilotChatService.cs           # GitHub Copilot SDK integration
-│       ├── CopilotChatClient.cs            # IChatClient implementation
-│       └── CopilotChatDefaults.cs          # Prompts & config
-│
-└── XafCopilotStandalone.Module.Blazor/     # Blazor-specific module
-```
-
----
-
-## 🔧 Configuration
-
-### GitHub Copilot API Key
-
-**Option 1: appsettings.json**
-```json
-{
-  "GitHubCopilot": {
-    "ApiKey": "your-api-key",
-    "Model": "gpt-4o",
-    "Temperature": 0.7
-  }
-}
-```
-
-**Option 2: Environment Variable**
-```bash
-export GITHUB_COPILOT_API_KEY=your-api-key
-```
-
-**Option 3: User Secrets** (recommended for dev)
-```bash
-dotnet user-secrets set "GitHubCopilot:ApiKey" "your-api-key"
-```
-
-### Security Configuration
-
-**Standalone Page Access Control:**
-
-Edit `Chat.razor` to add authentication:
-```csharp
-@attribute [Authorize] // Require login
-```
-
-**API Endpoint Authentication:**
-
-Edit `ChatController.cs`:
-```csharp
-[Authorize] // Require token
-[ApiController]
-public class ChatController : ControllerBase
-{
-    // ...
-}
-```
-
----
-
-## 📊 Comparison Table
-
-| Feature | XAF ViewItem | Standalone Page | REST API |
-|---|---|---|---|
-| **Login Required** | ✅ Yes | ⚙️ Optional | ⚙️ Optional |
-| **XAF Integration** | ✅ Full | ❌ No | ❌ No |
-| **URL Parameters** | ❌ No | ✅ Yes | N/A |
-| **Embeddable** | ❌ No | ✅ Yes | N/A |
-| **Programmatic Access** | ❌ No | ❌ No | ✅ Yes |
-| **Conversation Persistence** | ✅ Per user | ❌ Session only | ❌ Stateless |
-| **Mobile Friendly** | ⚙️ Depends | ✅ Yes | ✅ Yes |
-| **External System Integration** | ❌ No | ⚙️ Limited | ✅ Yes |
-
----
-
-## 🎨 Customization
-
-### Change AI Model
-```csharp
-// In CopilotChatService.cs
-builder.UseChatClient(client => client
-    .UseGitHubCopilot(apiKey, modelId: "gpt-4o") // Change model here
-);
-```
-
-### Custom System Prompt
-```csharp
-// In CopilotChatDefaults.cs
-public static string SystemPrompt =>
-    "You are a helpful AI assistant for our e-commerce platform. " +
-    "You have access to orders, products, and customer data.";
-```
-
-### Add Custom Prompt Suggestions
-```csharp
-// In CopilotChatDefaults.cs
-public static List<PromptSuggestion> PromptSuggestions => new()
-{
-    new("Orders", "Show today's orders", "List all orders placed today"),
-    new("Sales", "Sales report", "Generate a sales report for this month"),
-    new("Customers", "Top customers", "Who are our top 10 customers?")
-};
-```
-
----
-
-## 🧪 Testing
-
-### Test Standalone Page
-```bash
-# Open browser
 https://localhost:5001/chat?message=Hello
-
-# Or use curl
-curl "https://localhost:5001/chat?message=Hello"
+https://localhost:5001/chat?message=Show order&context=order123
 ```
 
-### Test REST API
+**REST API:**
 ```bash
 curl -X POST https://localhost:5002/api/chat \
   -H "Content-Type: application/json" \
   -d '{"message": "Hello, who are you?"}'
 ```
 
-### Health Check
-```bash
-curl https://localhost:5002/api/chat/health
+---
+
+## 🎨 Adapting for Your ViewItems
+
+### Step 1: Extract Your ViewItem as a Component
+
+**Before (XAF-only):**
+```csharp
+[ViewItem(typeof(IModelMyViewItem))]
+public class MyViewItemBlazor : ViewItem
+{
+    // XAF-specific code
+}
+```
+
+**After (Reusable Component):**
+```csharp
+// 1. Create standalone component
+// MyComponent.razor
+<div class="my-component">
+    @* Your ViewItem UI *@
+</div>
+
+@code {
+    [Parameter]
+    public string? InitialData { get; set; }
+}
+
+// 2. Wrap in XAF ViewItem
+public class MyViewItemBlazor : ViewItem, IComponentContentHolder
+{
+    RenderFragment IComponentContentHolder.ComponentContent => builder =>
+    {
+        builder.OpenComponent<MyComponent>(0);
+        builder.CloseComponent();
+    };
+}
+```
+
+### Step 2: Create Standalone Page
+
+```csharp
+// Pages/MyView.razor
+@page "/myview"
+@page "/myview/{Id?}"
+
+<MyComponent InitialData="@Id" />
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "id")]
+    public string? Id { get; set; }
+}
+```
+
+### Step 3: Add API Endpoint (Optional)
+
+```csharp
+[ApiController]
+[Route("api/myview")]
+public class MyViewController : ControllerBase
+{
+    [HttpPost]
+    public IActionResult Process([FromBody] MyRequest request)
+    {
+        // Process and return data
+        return Ok(new MyResponse { ... });
+    }
+}
 ```
 
 ---
 
-## 📚 Articles
+## 📊 Comparison: Before vs After
 
-This project is based on the implementation described in:
+| Feature | Traditional XAF | With URL Config |
+|---|---|---|
+| **Login Required** | ✅ Always | ⚙️ Optional |
+| **Direct URL Access** | ❌ No | ✅ Yes |
+| **Shareable Links** | ❌ No | ✅ Yes |
+| **URL Parameters** | ❌ No | ✅ Yes |
+| **Embeddable** | ❌ No | ✅ Yes |
+| **REST API** | ❌ No | ✅ Yes |
+| **XAF Security** | ✅ Full | ⚙️ Optional |
+
+---
+
+## 🎯 Real-World Use Cases
+
+### 1. Customer Order Links
+**Problem:** Customer calls: "Where's my order?"
+**Solution:** Send them a direct link
+
+```
+https://yourapp.com/order?id=12345&email=customer@example.com
+```
+
+Customer sees order status without login.
+
+### 2. QR Code on Receipts
+**Problem:** Want customers to access support chat
+**Solution:** Print QR code linking to chat with order context
+
+```
+https://yourapp.com/support?order=12345&store=downtown
+```
+
+### 3. Email Action Links
+**Problem:** Email says "Approve expense report #789"
+**Solution:** Link directly to approval view
+
+```
+https://yourapp.com/approve?type=expense&id=789&token=...
+```
+
+### 4. Mobile App Integration
+**Problem:** Mobile app needs to access XAF functionality
+**Solution:** Call REST API
+
+```csharp
+var response = await httpClient.PostAsJsonAsync(
+    "https://yourapp.com/api/order",
+    new { orderId = 123 }
+);
+```
+
+### 5. Telegram/Discord Bot
+**Problem:** Users want to query data via chat
+**Solution:** Bot calls your API
+
+```python
+response = requests.post("https://yourapp.com/api/chat", 
+    json={"message": "Show today's orders"})
+```
+
+---
+
+## 🔒 Security Considerations
+
+### Public Access (Standalone Page)
+```csharp
+// Chat.razor - No authentication
+@page "/chat"
+<MyComponent />
+```
+
+### Token-Based Auth
+```csharp
+// Chat.razor - Require token
+@page "/chat"
+@attribute [Authorize]
+<MyComponent />
+```
+
+### API Key Auth
+```csharp
+// ChatController.cs
+[ApiKey] // Custom attribute
+public class ChatController : ControllerBase
+{
+    // ...
+}
+```
+
+### XAF Security Integration
+```csharp
+// Keep XAF security for ViewItem, public for standalone
+if (User.Identity?.IsAuthenticated == true)
+{
+    // Use XAF security
+}
+else
+{
+    // Limited public access
+}
+```
+
+---
+
+## 📁 Project Structure
+
+```
+XafBlazorViewItemUrlConfiguration/
+├── XafBlazorViewItemUrlConfiguration.Blazor.Server/
+│   ├── Editors/
+│   │   └── CopilotChatViewItem/
+│   │       ├── CopilotChat.razor              ← Shared component
+│   │       └── CopilotChatViewItemBlazor.cs   ← XAF ViewItem
+│   └── Pages/
+│       └── Chat.razor                          ← URL-accessible page ★
+│
+├── XafBlazorViewItemUrlConfiguration.WebApi/
+│   └── Controllers/
+│       └── ChatController.cs                   ← REST API ★
+│
+├── XafBlazorViewItemUrlConfiguration.Module/
+│   └── Services/
+│       └── CopilotChatService.cs              ← Business logic
+│
+└── README.md                                   ← You are here
+```
+
+---
+
+## 🧪 Testing URLs
+
+### Basic Access
+```
+https://localhost:5001/chat
+```
+
+### Pre-populated Message
+```
+https://localhost:5001/chat?message=List all orders
+```
+
+### With Context
+```
+https://localhost:5001/chat?message=Show details&context=order123
+```
+
+### Multiple Parameters
+```
+https://localhost:5001/chat?message=Hello&context=user:456,order:789
+```
+
+---
+
+## 💡 Tips & Best Practices
+
+### 1. URL-Friendly Parameter Encoding
+```csharp
+// Good
+var url = $"/chat?message={Uri.EscapeDataString("Show order #123")}";
+// Result: /chat?message=Show%20order%20%23123
+
+// Bad
+var url = $"/chat?message=Show order #123"; // Breaks with special chars
+```
+
+### 2. Deep Linking Pattern
+```csharp
+// Support both formats
+@page "/order/{Id}"                    // /order/123
+[SupplyParameterFromQuery(Name = "id")] // /order?id=123
+```
+
+### 3. State Preservation
+```csharp
+// Save state to URL when it changes
+protected override void OnParametersSet()
+{
+    NavigationManager.NavigateTo(
+        $"/chat?message={CurrentMessage}&context={CurrentContext}",
+        replace: true
+    );
+}
+```
+
+### 4. Share Button Implementation
+```razor
+<button @onclick="CopyShareLink">📋 Copy Link</button>
+
+@code {
+    async Task CopyShareLink()
+    {
+        var url = $"{NavigationManager.BaseUri}chat?message={Message}";
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", url);
+    }
+}
+```
+
+---
+
+## 📚 Related Articles
+
+This project is inspired by:
 - [The Day I Integrated GitHub Copilot SDK Inside My XAF App — Part 1](https://www.jocheojeda.com/2026/02/16/the-day-i-integrated-github-copilot-sdk-inside-my-xaf-app-part-1/)
 - [The Day I Integrated GitHub Copilot SDK Inside My XAF App — Part 2](https://www.jocheojeda.com/2026/02/16/the-day-i-integrated-github-copilot-sdk-inside-my-xaf-app-part-2/)
 
@@ -390,10 +488,12 @@ MIT License - see LICENSE.txt
 
 ## 🔗 Links
 
-- [DevExpress XAF](https://www.devexpress.com/products/net/application_framework/)
+- [DevExpress XAF](https://www.devexpress.com/xaf)
+- [Blazor Routing](https://learn.microsoft.com/en-us/aspnet/core/blazor/fundamentals/routing)
 - [GitHub Copilot SDK](https://github.com/features/copilot)
-- [Microsoft.Extensions.AI](https://github.com/dotnet/extensions)
 
 ---
 
 **Made with ❤️ by [Joche Ojeda](https://www.jocheojeda.com)**
+
+**Tags:** `xaf`, `devexpress`, `blazor`, `url-configuration`, `viewitem`, `deep-linking`, `rest-api`, `copilot`

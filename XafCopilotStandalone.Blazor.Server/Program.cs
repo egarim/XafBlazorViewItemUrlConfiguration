@@ -14,7 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace XafCopilotStandalone.Blazor.Server {
+namespace XafBlazorViewItemUrlConfiguration.Blazor.Server {
     public class Program : IDesignTimeApplicationFactory {
         private static bool ContainsArgument(string[] args, string argument) {
             return args.Any(arg => arg.TrimStart('/').TrimStart('-').ToLower() == argument.ToLower());

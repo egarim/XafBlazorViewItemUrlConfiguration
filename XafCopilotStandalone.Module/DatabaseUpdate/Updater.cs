@@ -11,9 +11,9 @@ using DevExpress.Xpo;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
-using XafCopilotStandalone.Module.BusinessObjects;
+using XafBlazorViewItemUrlConfiguration.Module.BusinessObjects;
 
-namespace XafCopilotStandalone.Module.DatabaseUpdate {
+namespace XafBlazorViewItemUrlConfiguration.Module.DatabaseUpdate {
     // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Updating.ModuleUpdater
     public class Updater : ModuleUpdater {
         public Updater(IObjectSpace objectSpace, Version currentDBVersion) :
