@@ -1,0 +1,26 @@
+@page
+@model XafBlazorViewItemUrlConfiguration.Blazor.Server.Pages.TestPageModel
+@using Microsoft.AspNetCore.Authorization
+@attribute [AllowAnonymous]
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Routing Test</title>
+</head>
+<body>
+    <h1>✅ Routing Works!</h1>
+    <p>Message parameter: <strong>@Model.Message</strong></p>
+    <p>Time: @DateTime.Now</p>
+    
+    <h2>Test Links:</h2>
+    <ul>
+        <li><a href="/Test">No parameters</a></li>
+        <li><a href="/Test?message=Hello">With message</a></li>
+        <li><a href="/Chat">Chat page</a></li>
+        <li><a href="/Chat?message=Test">Chat with message</a></li>
+    </ul>
+</body>
+</html>

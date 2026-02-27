@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace XafBlazorViewItemUrlConfiguration.Blazor.Server.Pages
 {
-    [AllowAnonymous]  // Allow access without login
-    public class ChatPageModel : PageModel
+    [AllowAnonymous]
+    public class TestPageModel : PageModel
     {
         public string? Message { get; set; }
         
         public void OnGet(string? message = null)
         {
-            Message = message;
+            Message = message ?? "(no message)";
         }
     }
 }

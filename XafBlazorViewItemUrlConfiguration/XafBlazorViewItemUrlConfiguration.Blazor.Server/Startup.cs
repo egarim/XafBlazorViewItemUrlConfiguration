@@ -139,11 +139,11 @@ namespace XafBlazorViewItemUrlConfiguration.Blazor.Server
             app.UseXaf();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapXafEndpoints();
-                endpoints.MapBlazorHub();
-                endpoints.MapRazorPages();  // Enable Razor Pages
-                endpoints.MapControllers(); // Enable API controllers
-                endpoints.MapFallbackToPage("/_Host");
+                endpoints.MapRazorPages();     // Map Razor Pages FIRST
+                endpoints.MapControllers();    // Then API controllers
+                endpoints.MapXafEndpoints();   // Then XAF
+                endpoints.MapBlazorHub();      // Then SignalR
+                endpoints.MapFallbackToPage("/_Host"); // Finally fallback
             });
         }
     }
