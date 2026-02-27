@@ -1,0 +1,253 @@
+@page "/chat"
+@page "/chat/{InitialMessage?}"
+@using DevExpress.AIIntegration.Blazor.Chat
+@using DevExpress.Blazor
+@using Microsoft.Extensions.AI
+@using XafCopilotStandalone.Module.Services
+@inject NavigationManager Navigation
+
+<PageTitle>AI Chat - Standalone</PageTitle>
+
+<div class="standalone-chat-wrapper">
+    <div class="standalone-chat-header">
+        <h3>🤖 AI Assistant</h3>
+        <p class="chat-subtitle">Standalone chat - no login required</p>
+    </div>
+
+    <div class="standalone-chat-container">
+        <DxAIChat CssClass="standalone-chat"
+                  UseStreaming="true"
+                  SizeMode="SizeMode.Medium"
+                  ResponseContentFormat="ResponseContentFormat.Markdown"
+                  Initialized="OnChatInitialized">
+            <PromptSuggestions>
+                @foreach (var s in CopilotChatDefaults.PromptSuggestions)
+                {
+                    <DxAIChatPromptSuggestion Title="@s.Title"
+                                              Text="@s.Text"
+                                              PromptMessage="@s.Prompt" />
+                }
+            </PromptSuggestions>
+            <MessageContentTemplate>
+                @ToHtml(context.Content)
+            </MessageContentTemplate>
+            <EmptyMessageAreaTemplate>
+                <div class="chat-empty-area">
+                    <div class="chat-logo">✨</div>
+                    <h4>@CopilotChatDefaults.HeaderText</h4>
+                    <p>
+                        This is a <strong>standalone page</strong> accessible via URL.<br />
+                        Try: <code>/chat?message=Hello</code> or <code>/chat?message=List orders&context=user123</code>
+                    </p>
+                </div>
+            </EmptyMessageAreaTemplate>
+        </DxAIChat>
+    </div>
+
+    <div class="chat-info">
+        <p>
+            <strong>URL Parameters:</strong><br />
+            • <code>message</code> - Pre-populate initial message<br />
+            • <code>context</code> - Pass context data (userId, orderId, etc.)<br />
+            Example: <a href="/chat?message=Show me order 123&context=order123">/chat?message=Show me order 123&context=order123</a>
+        </p>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "message")]
+    public string? InitialMessage { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "context")]
+    public string? Context { get; set; }
+
+    MarkupString ToHtml(string markdown)
+        => new(CopilotChatDefaults.ConvertMarkdownToHtml(markdown));
+
+    void OnChatInitialized(IAIChat chat)
+    {
+        // System prompt
+        var systemPrompt = CopilotChatDefaults.SystemPrompt;
+
+        // Add context if provided via URL
+        if (!string.IsNullOrEmpty(Context))
+        {
+            systemPrompt += $"\n\nContext: {Context}";
+        }
+
+        chat.LoadMessages(new[]
+        {
+            new BlazorChatMessage(ChatRole.System, systemPrompt)
+        });
+
+        // Send initial message if provided via URL
+        if (!string.IsNullOrEmpty(InitialMessage))
+        {
+            // Delay to ensure chat is ready
+            _ = Task.Run(async () =>
+            {
+                await Task.Delay(500);
+                await InvokeAsync(async () =>
+                {
+                    await chat.SendMessageAsync(InitialMessage);
+                });
+            });
+        }
+    }
+}
+
+<style>
+    .standalone-chat-wrapper {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: #f9fafb;
+    }
+
+    .standalone-chat-header {
+        background: white;
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid #e5e7eb;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .standalone-chat-header h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.5rem;
+        color: #111827;
+    }
+
+    .chat-subtitle {
+        margin: 0;
+        color: #6b7280;
+        font-size: 0.9rem;
+    }
+
+    .standalone-chat-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        padding: 1rem 2rem;
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .chat-empty-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: #6b7280;
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .chat-logo {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .chat-empty-area h4 {
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        color: #111827;
+    }
+
+    .chat-empty-area p {
+        max-width: 600px;
+        line-height: 1.6;
+        font-size: 1rem;
+    }
+
+    .chat-empty-area code {
+        background: #f3f4f6;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+        color: #dc2626;
+    }
+
+    .standalone-chat {
+        flex: 1;
+        height: 100%;
+        min-height: 0;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .chat-info {
+        padding: 1rem 2rem;
+        background: #fef3c7;
+        border-top: 1px solid #fde68a;
+        font-size: 0.85rem;
+        color: #78350f;
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .chat-info p {
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    .chat-info code {
+        background: #fde68a;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: 'Consolas', monospace;
+    }
+
+    .chat-info a {
+        color: #92400e;
+        text-decoration: underline;
+    }
+
+    /* ── Markdown styling ──────────────────────────────── */
+    .standalone-chat table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 0.75rem 0;
+        font-size: 0.9rem;
+    }
+
+    .standalone-chat th,
+    .standalone-chat td {
+        border: 1px solid #e5e7eb;
+        padding: 8px 12px;
+        text-align: left;
+    }
+
+    .standalone-chat th {
+        background-color: #f9fafb;
+        font-weight: 600;
+    }
+
+    .standalone-chat tr:nth-child(even) {
+        background-color: #fafafa;
+    }
+
+    .standalone-chat tr:hover {
+        background-color: #f3f4f6;
+    }
+
+    .standalone-chat pre {
+        background-color: #1f2937;
+        color: #f9fafb;
+        border-radius: 8px;
+        padding: 1rem;
+        overflow-x: auto;
+    }
+
+    .standalone-chat code {
+        font-family: 'Cascadia Code', 'Consolas', monospace;
+        font-size: 0.85em;
+    }
+</style>

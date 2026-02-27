@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageType>XafCopilotStandalone</PackageType>
+    <PackageVersion>1.0.3</PackageVersion>
+    <PackageId>Xaf.Blazor</PackageId>
+    <Title>Xaf Blazor XafCopilotStandalone</Title>
+    <Authors>Joche Ojeda</Authors>
+    <Description>A xafcopilotstandalone to create a new XAF blazor application using dotnet CLI</Description>
+    <PackageTags>dotnet-new;DevExpress;XAF;BLazor</PackageTags>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
+    <PackageProjectUrl>https://github.com/egarim/XafBlazorAndApiDotNetNew</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/egarim/XafBlazorAndApiDotNetNew</RepositoryUrl>
+  </PropertyGroup>
+<PropertyGroup>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+</PropertyGroup>
+
+<ItemGroup>
+    <None Include="LICENSE.txt" Pack="true" PackagePath=""/>
+</ItemGroup>
+  <ItemGroup>
+    <Content Include="**\*"
+     Exclude="xafcopilotstandalone.csproj;xafcopilotstandalone.json;XafCopilotStandalone.Blazor.Server\*.db;XafCopilotStandalone.Blazor.Server\bin\**;XafCopilotStandalone.Module\bin\**;XafCopilotStandalone.Module.Blazor\bin\**;.git\**;.cr\**;.vs\**;Pack.bat;pack.sh;xafcopilotstandalone.csproj;README.md;*.pack.sh" 
+    />
+    <Compile Remove="**\*" />
+  </ItemGroup>
+
+</Project>
